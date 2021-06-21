@@ -1,4 +1,4 @@
-# DU-Tree
+# Disk usage tree
 
 DU-Tree is a simple command line utility which displays disk usage within a tree like structure.  This acts as a personal hello world application for any new applications.  Each folder within this repo is another language used to make du-tree.
 
