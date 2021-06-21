@@ -2,11 +2,11 @@
 
 DU-Tree is a simple command line utility which displays disk usage within a tree like structure.  This acts as a personal hello world application for any new applications.  Each folder within this repo is another language used to make du-tree.
 
-# Usage:
+## Usage:
 
 `du-tree [-Vvlbf] directory`
 
-## Arugments:
+### Arugments:
 
 Short | Long | Explination
 --- | --- | --- |
@@ -16,7 +16,7 @@ Short | Long | Explination
 -b | --bleach | No color is outputed
 -f | --full | Print to full path for every file.
 
-# Tests
+## Tests
 
 The goal would be to have a unified testing suite, but that is still being looked into.
 
