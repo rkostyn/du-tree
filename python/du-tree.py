@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/usr/bin/python3
 # By Alex Kostyn
 
 # Starting import section ##
@@ -45,7 +45,7 @@ def convertsize(size):
     size_name = ("KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB")
     num = int(math.floor(math.log(size, 1024)))
     power = math.pow(1024, num)
-    size = round(size/power, 2)
+    size = round(size / power, 2)
     return '%s %s' % (size, size_name[num])
 
 
@@ -53,28 +53,25 @@ def convertsize(size):
 # Depending on the percent of total Disk Usage determins the color of the print
 def printpath(pppercent, ppsubfilename, ppsubfilesize):
     if pppercent == 100:
-        print ppsubfilename + "\t" + ppsubfilesize
+        print(ppsubfilename + "\t" + ppsubfilesize)
         if args.verbose:
-            print "@ " + str(pppercent) + "%"
+            print("@ " + str(pppercent) + "%")
     elif pppercent > 60:
-        print termColor.red + ppsubfilename\
-            + "\t" + ppsubfilesize + termColor.off
+        print(termColor.red + ppsubfilename + "\t" + ppsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pppercent) + "%"
+            print("@ " + str(pppercent) + "%")
     elif pppercent > 40:
-        print termColor.yel + ppsubfilename\
-              + "\t" + ppsubfilesize + termColor.off
+        print(termColor.yel + ppsubfilename + "\t" + ppsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pppercent) + "%"
+            print("@ " + str(pppercent) + "%")
     elif pppercent > 20:
-        print termColor.blu + ppsubfilename\
-              + "\t" + ppsubfilesize + termColor.off
+        print(termColor.blu + ppsubfilename + "\t" + ppsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pppercent) + "%"
+            print("@ " + str(pppercent) + "%")
     elif 20 > pppercent > 10:
-        print ppsubfilename + "\t" + ppsubfilesize
+        print(ppsubfilename + "\t" + ppsubfilesize)
         if args.verbose:
-            print "@ " + str(pppercent) + "%"
+            print("@ " + str(pppercent) + "%")
 
 
 # Prints out just the file like old du-tree.
@@ -85,57 +82,43 @@ def printfile(pfpercent, pfsubfilename, pfsubfilesize):
     spacenumber = pfsubfilename.count("/") * 2
 
     if pfpercent == 100:
-        print pfsubfilename + "\t" + pfsubfilesize
+        print(pfsubfilename + "\t" + pfsubfilesize)
         if args.verbose:
-            print "@ " + str(pfpercent) + "%"
+            print("@ " + str(pfpercent) + "%")
     elif pfpercent > 60:
-        print termColor.red + " " * spacenumber + \
-            splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off
+        print(termColor.red + " " * spacenumber + splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pfpercent) + "%"
+            print("@ " + str(pfpercent) + "%")
     elif pfpercent > 40:
-        print termColor.yel + " " * spacenumber + \
-            splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off
+        print(termColor.yel + " " * spacenumber + splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pfpercent) + "%"
+            print("@ " + str(pfpercent) + "%")
     elif pfpercent > 20:
-        print termColor.blu + " " * spacenumber + \
-            splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off
+        print(termColor.blu + " " * spacenumber + splitsubfilename[-1] + "\t" + pfsubfilesize + termColor.off)
         if args.verbose:
-            print "@ " + str(pfpercent) + "%"
+            print("@ " + str(pfpercent) + "%")
     elif 20 > pfpercent > 10:
-        print " " * spacenumber + splitsubfilename[-1] + "\t" + pfsubfilesize
+        print(" " * spacenumber + splitsubfilename[-1] + "\t" + pfsubfilesize)
         if args.verbose:
-            print "@ " + str(pfpercent) + "%"
+            print("@ " + str(pfpercent) + "%")
+
 
 # --- Entry --- #
 # Starting ArgParser:
 parser = argparse.ArgumentParser(description='DU formatter')
 # Run on any directory.
-parser.add_argument('directory',
-                    help="The directory you want to scan.",
-                    nargs="*")
+parser.add_argument('directory', help="The directory you want to scan.", nargs="*")
 # Generic version speal.
-parser.add_argument('-V', '--version',
-                    action='version',
-                    version='%(prog)s, Version: ' + str(VERSION))
+parser.add_argument('-V', '--version', action='version', version='%(prog)s, Version: ' + str(VERSION))
 # Prints everything.
 # Is more useful for me dubugging the code.
-parser.add_argument('-v', '--verbose',
-                    action='store_true',
-                    help="Prints everything the program is doing.")
+parser.add_argument('-v','--verbose', action='store_true', help="Prints everything the program is doing.")
 # Prints a legend showing what each color means.
-parser.add_argument('-l', '--legend',
-                    action='store_true',
-                    help="Prints color legend before running.")
+parser.add_argument('-l', '--legend', action='store_true', help="Prints color legend before running.")
 # Clear colors from output.
-parser.add_argument('-b', '--bleach',
-                    action='store_true',
-                    help="Removes color from output")
+parser.add_argument('-b', '--bleach', action='store_true', help="Removes color from output")
 # Prints full path.
-parser.add_argument('-f', '--full',
-                    action='store_true',
-                    help="Prints full path")
+parser.add_argument('-f', '--full', action='store_true', help="Prints full path")
 # Doing the needful.
 args = parser.parse_args()
 
@@ -150,14 +133,11 @@ if args.bleach:
 # Printing legend if argument was passed.
 # Specifically showing what colors mean what.
 if args.legend:
-    print "\n  --- Color Legend --- "
-    print termColor.red + \
-        " [*] Greater than 60% overall usage." + termColor.off
-    print termColor.yel + \
-        " [*] Greater than 40% overall usage." + termColor.off
-    print termColor.blu + \
-        " [*] Greater than 20% overall usage." + termColor.off
-    print "\n"
+    print("\n  --- Color Legend --- ")
+    print(termColor.red + " [*] Greater than 60% overall usage." + termColor.off)
+    print(termColor.yel + " [*] Greater than 40% overall usage." + termColor.off)
+    print(termColor.blu + " [*] Greater than 20% overall usage." + termColor.off)
+    print("\n")
 
 # Running the command and sending the output to a variable
 # Running without human readable for acuracy.
@@ -165,30 +145,27 @@ if args.legend:
 # same with stdout = subprocess.PIPE
 
 if not args.bleach:
-    print "Running Du",
-    sys.stdout.flush()
+    print("Running Du", end='', flush=True)
 
 command = ['/usr/bin/du', '-d' + str(depth)]
 # Adding dirs to the end of the command.
 for i in dirs:
     command.append(i)
-proc = subprocess.Popen(
-    command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-output = proc.communicate()
+proc = subprocess.Popen(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+output, error = proc.communicate()
 
 if not args.bleach:
-    print "\rComplete: "
+    print("\rComplete: ")
 
 # More for dubugging purposes
 if args.verbose:
-    print output
+    print(output)
 
 # Trimming the output.
 # Command is stored in a Tuple.
 # Grabbing just the first element.
 # Splitting via '\n' Then storing in an array.
-FormattedOutPut = output[0]
-FormattedOutPut = FormattedOutPut.splitlines()
+FormattedOutPut = output.decode('utf-8').splitlines()
 
 # Going through each element of the output to find the base dir.
 # The base dir will always be the largest
@@ -198,17 +175,15 @@ count = 0
 baseDir = ""
 baseDirSize = 0
 for line in FormattedOutPut:
-
     count += 1
     dirSize = int(line.split('\t')[0])
 
     if dirSize > int(baseDirSize):
         if args.verbose:
-            print str(dirSize) + " > " + str(baseDirSize)
+            print(str(dirSize) + " > " + str(baseDirSize))
 
         baseDirSize = dirSize
         baseDir = line.split('\t')[1]
-
 
 # Going through and outputing large folders / files
 # Converted baseDirSize to an float before doing anything.
@@ -218,7 +193,6 @@ for line in FormattedOutPut:
 # Converted to int to remove the decimal.
 baseDirSize = float(baseDirSize)
 for line in reversed(FormattedOutPut):
-
     subFileSize = float(line.split('\t')[0])
     subFileName = line.split('\t')[1]
 
